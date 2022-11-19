@@ -12,7 +12,7 @@ public class SpringbootK8sLab1Application {
 	@GetMapping("/message")
 	public String getMessage(){
 
-		return "Welcome to Springboot-k8s-session..........!";
+		return "Welcome to Azure-Springboot-k8s-session..........!";
 	}
 
 	public static void main(String[] args) {
