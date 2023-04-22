@@ -5,28 +5,22 @@ trigger:
 pool:
   name: MyPool
 
-variables:
-  solution: '**/*.sln'
-
 steps:
-  - task: NuGetToolInstaller@1
-    displayName: 'Nuget Installation'
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
 
-  - task: NuGetCommand@2
-    displayName: 'Nuget restoreSolution'
-    inputs:
-      restoreSolution: '$(solution)'
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
 
-  - task: VSBuild@1
-    displayName: 'Build msbuildArgs'
-    inputs:
-      solution: '$(solution)'
-      msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)'
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'PublishBuildArtifacts Installation'
-    inputs:
-      PathtoPublish: "$(build.artifcatstagingdirectory)"
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
-    
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
